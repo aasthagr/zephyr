@@ -47,15 +47,15 @@ extern size_t z_cache_line_size_get(void);
  * @return N/A
  */
 
-_sys_cache_flush_sig(_cache_flush_clflush)
+void arch_dcache_flush(void *start_addr, size_t size)
 {
-	int end;
+	uintptr_t end;
 
 	size = ROUND_UP(size, sys_cache_line_size);
-	end = virt + size;
+	end = (uintptr_t)start_addr + size;
 
-	for (; virt < end; virt += sys_cache_line_size) {
-		__asm__ volatile("clflush %0;\n\t" :  : "m"(virt));
+	for (; (uintptr_t)start_addr < end; (uintptr_t)start_addr += sys_cache_line_size) {
+		__asm__ volatile("clflush %0;\n\t" :  : "m"((uintptr_t)start_addr));
 	}
 
 	__asm__ volatile("mfence;\n\t");
