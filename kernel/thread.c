@@ -921,5 +921,29 @@ static inline k_ticks_t z_vrfy_k_thread_timeout_expires_ticks(
 	Z_OOPS(Z_SYSCALL_OBJ(t, K_OBJ_THREAD));
 	return z_impl_k_thread_timeout_expires_ticks(t);
 }
+
+void z_impl_cache_flush(void *addr, size_t size)
+{
+	sys_cache_flush(addr, size);
+}
+
+static inline void z_vrfy_cache_flush(void *addr, size_t size)
+{
+	Z_OOPS(Z_SYSCALL_MEMORY_WRITE(addr, size));
+	z_impl_cache_flush();
+}
+
+void z_impl_cache_invd(void *addr, size_t size)
+{
+	sys_cache_invd(addr, size);
+}
+
+static inline void z_vrfy_cache_invd(void *addr, size_t size)
+{
+	Z_OOPS(Z_SYSCALL_MEMORY_WRITE(addr, size));
+	z_impl_cache_invd();
+}
+#include <syscalls/cache_flush_mrsh.c>
+#include <syscalls/cache_invd_mrsh.c>
 #include <syscalls/k_thread_timeout_expires_ticks_mrsh.c>
 #endif

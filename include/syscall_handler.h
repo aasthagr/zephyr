@@ -539,7 +539,12 @@ static inline int z_obj_validation_check(struct z_object *ko,
 #define Z_SYSCALL_OBJ_NEVER_INIT(ptr, type) \
 	Z_SYSCALL_IS_OBJ(ptr, type, _OBJ_INIT_FALSE)
 
+__syscall void cache_flush(void *addr, size_t size);
+
+__syscall void cache_invd(void *addr, size_t size);
+
 #include <driver-validation.h>
+#include <syscalls/syscall_handler.h>
 
 #endif /* _ASMLANGUAGE */
 
