@@ -31,7 +31,7 @@ coverage run -m pytest $ZEPHYR_BASE/scripts/tests/sanitycheck/
 Then we can generate the coverage report for just sanitycheck script using
 
 ```bash
-coverage report -m $ZEPHYR_BASE/scripts/sanitycheck
+coverage report -m $ZEPHYR_BASE/scripts/sanity_chk/sanitylib.py
 ```
 
 The html coverage report for sanitycheck can be generated using
